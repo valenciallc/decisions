@@ -653,11 +653,6 @@
             page-break-inside: avoid;
         }
 
-        /* إخفاء الرأس والقدم في العرض العادي */
-        .print-header, .print-footer {
-            display: none;
-        }
-
         /* نافذة الإشعار التلقائي */
         #auto-send-notification {
             position: fixed;
@@ -692,6 +687,12 @@
             background: #d1ecf1;
             color: #0c5460;
             border-color: #bee5eb;
+        }
+
+        #auto-send-notification.sending {
+            background: #fff3cd;
+            color: #856404;
+            border-color: #ffeeba;
         }
 
         @keyframes slideIn {
@@ -814,11 +815,6 @@
 
     <!-- نموذج الأمر الإداري -->
     <div class="content-container no-break">
-        <!-- الترويسة -->
-        <div class="header">
-            <div class="company-name">شركة فالنسيا لتجارة الرخام</div>
-            <div class="company-subtitle">والحجـــــــر الطـبيــعــــي</div>
-            <div class="department">ادارة المـــوارد البشريـــة</div>
 
             <div class="document-info">
                 <div class="document-date" id="current-date">--/--/----</div>
@@ -852,13 +848,13 @@
                 <div class="info-item">
                     <label for="employee-name">اسم الموظف:</label>
                     <select id="employee-name" class="print-field compact-field">
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value="">برينس انوبيل</option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
-                        <option value=""></option>
+                        <option value="">اختر الموظف</option>
+                        <option value="برينس انوبيل">برينس انوبيل</option>
+                        <option value="محمد أحمد">محمد أحمد</option>
+                        <option value="علي حسن">علي حسن</option>
+                        <option value="سامي عمر">سامي عمر</option>
+                        <option value="خالد محمود">خالد محمود</option>
+                    </select>
                 </div>
 
                 <div class="info-item">
@@ -879,7 +875,7 @@
                         <option value="">اختر القسم</option>
                         <option value="المحاسبة">المحاسبة</option>
                         <option value="المبيعات">المبيعات</option>
-                        <option value="ادارة مستودعات">المستودعات</option>
+                        <option value="ادارة مستودعات">ادارة مستودعات</option>
                         <option value="النقليات">النقليات</option>
                         <option value="الاليات">الاليات</option>
                         <option value="المشاريع">المشاريع</option>
@@ -894,11 +890,11 @@
                     <select id="supervisor-name" class="print-field compact-field">
                         <option value="">اختر المسؤول</option>
                         <option value="مهند نيازي السلق">مهند نيازي السلق</option>
-                        <option value="ركان إياد زياز">ركان اياد زياز</option>
-                        <option value="مأمون احمد حجازي">مامون احمد حجازي</option>
-                        <option value="أنس محمد السرداني">انس محمد السرداني</option>
-                        <option value="مكتب مصر">رمضان - التصميم</option>
-                        <option value="أمين احمد حجازي">امين احمد حجازي</option>
+                        <option value="ركان إياد زياز">ركان إياد زياز</option>
+                        <option value="مأمون احمد حجازي">مأمون احمد حجازي</option>
+                        <option value="أنس محمد السرداني">أنس محمد السرداني</option>
+                        <option value="رمضان - التصميم">رمضان - التصميم</option>
+                        <option value="أمين احمد حجازي">أمين احمد حجازي</option>
                     </select>
                 </div>
             </div>
@@ -990,7 +986,7 @@
         // متغيرات النظام
         // =============================================
 
-        let serialNumberCounter = localStorage.getItem('valenciaOrderCounter') || 1;
+        let serialNumberCounter = parseInt(localStorage.getItem('valenciaOrderCounter')) || 1;
 
         // =============================================
         // تهيئة الصفحة
@@ -999,20 +995,20 @@
         document.addEventListener('DOMContentLoaded', function() {
             setCurrentDate();
             setEffectiveDate();
-            updateSerialNumberDisplay();
             loadSerialNumber();
             loadSavedData();
 
             // تحديث تلقائي عند تغيير أي حقل
             document.querySelectorAll('.print-field').forEach(field => {
                 field.addEventListener('input', saveData);
+                field.addEventListener('change', saveData);
             });
         });
 
         function setCurrentDate() {
             const now = new Date();
-            const day = now.getDate();
-            const month = now.getMonth() + 1;
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
             const year = now.getFullYear();
             const dateStr = `${day}-${month}-${year}`;
 
@@ -1021,8 +1017,8 @@
 
         function setEffectiveDate() {
             const now = new Date();
-            const day = now.getDate();
-            const month = now.getMonth() + 1;
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
             const year = now.getFullYear();
             const dateStr = `${day}/${month}/${year}`;
 
@@ -1076,17 +1072,22 @@
         function loadSavedData() {
             const savedData = localStorage.getItem('valenciaOrderData');
             if (savedData) {
-                const data = JSON.parse(savedData);
+                try {
+                    const data = JSON.parse(savedData);
 
-                document.getElementById('order-type').value = data.orderType || '';
-                document.getElementById('employee-name').value = data.employeeName || '';
-                document.getElementById('employee-id').value = data.employeeId || '';
-                document.getElementById('job-title').value = data.jTitle || '';
-                document.getElementById('department-name').value = data.departmentName || '';
-                document.getElementById('supervisor-name').value = data.supervisorName || '';
-                document.getElementById('decision-details').value = data.decisionDetails || '';
-                document.getElementById('effective-date').value = data.effectiveDate || '';
-                document.getElementById('issuer-name').value = data.issuerName || '';
+                    document.getElementById('order-type').value = data.orderType || '';
+                    document.getElementById('employee-name').value = data.employeeName || '';
+                    document.getElementById('employee-id').value = data.employeeId || '';
+                    document.getElementById('job-title').value = data.jobTitle || '';
+                    document.getElementById('department-name').value = data.departmentName || '';
+                    document.getElementById('supervisor-name').value = data.supervisorName || '';
+                    document.getElementById('decision-details').value = data.decisionDetails || '';
+                    document.getElementById('effective-date').value = data.effectiveDate || '';
+                    document.getElementById('issuer-name').value = data.issuerName || '';
+                } catch (e) {
+                    console.error('خطأ في تحميل البيانات المحفوظة:', e);
+                    localStorage.removeItem('valenciaOrderData');
+                }
             }
         }
 
@@ -1114,47 +1115,12 @@
         }
 
         // =============================================
-        // دالة ضبط التنسيق للطباعة
-        // =============================================
-        function adjustPrintLayout() {
-            // ضبط ارتفاع حقل القرار تلقائيًا بناءً على المحتوى
-            const textarea = document.getElementById('decision-details');
-            if (textarea) {
-                // حساب الارتفاع المناسب بناءً على عدد الأسطر
-                const lines = textarea.value.split('\n').length;
-                const minHeight = 120;
-                const calculatedHeight = Math.max(minHeight, lines * 18);
-                textarea.style.height = calculatedHeight + 'px';
-            }
-
-            // إضافة فئة الطباعة للجسم
-            document.body.classList.add('printing');
-
-            // إعداد القيم للطباعة
-            document.querySelectorAll('.print-field').forEach(field => {
-                if (field.tagName === 'SELECT') {
-                    const selectedOption = field.options[field.selectedIndex];
-                    field.setAttribute('data-print-value', selectedOption ? selectedOption.text : '');
-                } else if (field.tagName === 'TEXTAREA') {
-                    field.setAttribute('data-print-value', field.value);
-                } else {
-                    field.setAttribute('data-print-value', field.value);
-                }
-            });
-
-            // إظهار عناصر الطباعة (الرأس والقدم)
-            document.querySelectorAll('.print-header, .print-footer').forEach(el => {
-                el.style.display = 'block';
-            });
-        }
-
-        // =============================================
         // دالة الإرسال التلقائي إلى التليجرام
         // =============================================
         async function sendToTelegramAuto() {
             const employeeName = document.getElementById('employee-name').value;
 
-            if (!employeeName || !employeeName.trim()) {
+            if (!employeeName || !employeeName.trim() || employeeName === 'اختر الموظف') {
                 console.log('⚠️ لم يتم إرسال الأمر: اسم الموظف غير موجود');
                 showAutoSendNotification('❌ يرجى إدخال اسم الموظف أولاً', 'error');
                 return false;
@@ -1208,7 +1174,7 @@
             if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
             else if (type === 'error') icon = '<i class="fas fa-exclamation-triangle"></i>';
             else if (type === 'info') icon = '<i class="fas fa-info-circle"></i>';
-            else icon = '<i class="fas fa-sync-alt fa-spin"></i>';
+            else if (type === 'sending') icon = '<i class="fas fa-sync-alt fa-spin"></i>';
 
             notification.innerHTML = icon + message;
 
@@ -1232,7 +1198,7 @@
         async function prepareAndPrint() {
             // التحقق من اكتمال البيانات
             const employeeName = document.getElementById('employee-name').value;
-            if (!employeeName || !employeeName.trim()) {
+            if (!employeeName || !employeeName.trim() || employeeName === 'اختر الموظف') {
                 showAutoSendNotification('❌ يرجى إدخال اسم الموظف أولاً', 'error');
                 return;
             }
@@ -1246,24 +1212,16 @@
             // إنشاء رقم تسلسلي جديد
             generateNewSerialNumber();
 
-            // ضبط التنسيق للطباعة
-            adjustPrintLayout();
-
             // إرسال تلقائي إلى التليجرام
             const sendResult = await sendToTelegramAuto();
 
             // الانتظار قليلاً لضمان اكتمال الإرسال قبل الطباعة
             setTimeout(() => {
+                // حفظ البيانات النهائية
+                saveData();
+
                 // فتح نافذة الطباعة
                 window.print();
-
-                // تنظيف بعد الطباعة
-                setTimeout(() => {
-                    document.body.classList.remove('printing');
-                    document.querySelectorAll('.print-header, .print-footer').forEach(el => {
-                        el.style.display = 'none';
-                    });
-                }, 500);
             }, sendResult ? 1000 : 500);
         }
 
@@ -1335,17 +1293,19 @@
 
                 const result = await response.json();
 
-                if (response.ok) {
+                if (response.ok && result.ok) {
                     console.log('✅ تم إرسال الرسالة بنجاح:', result);
-                    return result.ok;
+                    return true;
                 } else {
                     console.error('❌ فشل إرسال الرسالة:', result);
-                    return true; // محاكاة النجاح لأغراض العرض
+                    showAutoSendNotification('❌ فشل إرسال الرسالة إلى التليجرام', 'error');
+                    return false;
                 }
 
             } catch (error) {
                 console.error('❌ خطأ في الاتصال:', error);
-                return true; // محاكاة النجاح لأغراض العرض
+                showAutoSendNotification('❌ خطأ في الاتصال بالتليجرام', 'error');
+                return false;
             }
         }
     </script>
