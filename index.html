@@ -151,6 +151,12 @@
             border: 1px solid #c53030;
         }
 
+        .btn-manage {
+            background: linear-gradient(135deg, #2c5282, #1a365d);
+            color: white;
+            border: 1px solid #2c5282;
+        }
+
         textarea, input, select {
             border: 1px solid #cbd5e0;
             border-radius: 2px;
@@ -724,8 +730,10 @@
             padding: 12px;
             border-radius: 4px;
             width: 90%;
-            max-width: 350px;
+            max-width: 400px;
             text-align: center;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .confirmation-content h3 {
@@ -770,19 +778,10 @@
     <!-- نافذة تأكيد تصفير الرقم التسلسلي -->
     <div class="confirmation-modal" id="resetConfirmationModal">
         <div class="confirmation-content">
-            <h3><i class="fas fa-exclamation-triangle"></i> تأكيد تصفير الرقم التسلسلي</h3>
-            <p>هل أنت متأكد من أنك تريد تصفير الرقم التسلسلي؟</p>
-            <p>سيتم إعادة ضبط العداد إلى الرقم: <strong>ORD-000001</strong></p>
-            <div class="confirmation-buttons">
-                <button class="btn-confirm" onclick="confirmResetSerial()">
-                    <i class="fas fa-check"></i> نعم، تصفير
-                </button>
-                <button class="btn-cancel" onclick="closeResetConfirmation()">
-                    <i class="fas fa-times"></i> إلغاء
-                </button>
-            </div>
+            <!-- سيتم تعبئته ديناميكياً -->
         </div>
     </div>
+
     <!-- لوحة التحكم -->
     <div class="control-panel no-print">
         <div style="text-align: center; margin-bottom: 6px;">
@@ -797,6 +796,9 @@
         <div style="text-align: center;">
             <button class="btn btn-print" onclick="prepareAndPrint()">
                 <i class="fas fa-paper-plane"></i> طباعة وإرسال تلقائي
+            </button>
+            <button class="btn btn-manage" onclick="openSerialManager()">
+                <i class="fas fa-cog"></i> إدارة الرقم التسلسلي
             </button>
             <button class="btn btn-reset" onclick="showResetConfirmation()">
                 <i class="fas fa-redo"></i> تصفير الرقم التسلسلي
@@ -815,14 +817,12 @@
 
     <!-- نموذج الأمر الإداري -->
     <div class="content-container no-break">
-
-            <div class="document-info">
-                <div class="document-date" id="current-date">--/--/----</div>
-                <div class="document-title">أمـــر اداري</div>
-                <div style="text-align: center; flex: 1;">
-                    <div style="font-size: 8pt; color: #4a5568; margin-bottom: 1px;">رقم</div>
-                    <div class="document-number" id="serial-number">ORD-000001</div>
-                </div>
+        <div class="document-info">
+            <div class="document-date" id="current-date">--/--/----</div>
+            <div class="document-title">أمـــر اداري</div>
+            <div style="text-align: center; flex: 1;">
+                <div style="font-size: 8pt; color: #4a5568; margin-bottom: 1px;">رقم</div>
+                <div class="document-number" id="serial-number">ORD-000001</div>
             </div>
         </div>
 
@@ -850,7 +850,7 @@
                     <select id="employee-name" class="print-field compact-field">
                         <option value="">اختر الموظف</option>
                         <option value="برينس انوبيل">برينس انوبيل</option>
-                        <option value="محمد أحمد">محمد أحمد</option>
+                        <option value="سهيل خان صاحب علي خان">سهيل خان صاحب علي خان</option>
                         <option value="علي حسن">علي حسن</option>
                         <option value="سامي عمر">سامي عمر</option>
                         <option value="خالد محمود">خالد محمود</option>
@@ -983,22 +983,272 @@
         };
 
         // =============================================
+        // مدير الرقم التسلسلي المحسن
+        // =============================================
+
+        class SerialNumberManager {
+            constructor() {
+                this.config = {
+                    PREFIX: 'ORD',
+                    DIGITS: 6,
+                    RESET_MODE: 'NEVER', // NEVER, DAILY, MONTHLY, YEARLY
+                    SEPARATOR: '-',
+                    INCLUDE_DATE: false,
+                    DATE_FORMAT: 'YYYYMMDD'
+                };
+
+                this.counter = 1;
+                this.lastUpdate = new Date();
+                this.loadConfig();
+                this.loadCounter();
+                this.checkReset();
+            }
+
+            // تحميل الإعدادات من localStorage
+            loadConfig() {
+                const savedConfig = localStorage.getItem('valenciaSerialConfig');
+                if (savedConfig) {
+                    try {
+                        this.config = { ...this.config, ...JSON.parse(savedConfig) };
+                    } catch (e) {
+                        console.error('خطأ في تحميل إعدادات الرقم التسلسلي:', e);
+                    }
+                }
+            }
+
+            // حفظ الإعدادات في localStorage
+            saveConfig() {
+                localStorage.setItem('valenciaSerialConfig', JSON.stringify(this.config));
+            }
+
+            // تحميل العداد من localStorage مع التحقق من التاريخ
+            loadCounter() {
+                const counterData = localStorage.getItem('valenciaOrderCounterData');
+
+                if (counterData) {
+                    try {
+                        const data = JSON.parse(counterData);
+                        this.counter = data.counter || 1;
+                        this.lastUpdate = data.lastUpdate ? new Date(data.lastUpdate) : new Date();
+
+                        // حفظ نسخة احتياطية
+                        this.backupCounter(data);
+                    } catch (e) {
+                        console.error('خطأ في تحميل بيانات العداد:', e);
+                        this.resetToDefault();
+                    }
+                } else {
+                    // التوافق مع الإصدار القديم
+                    const oldCounter = localStorage.getItem('valenciaOrderCounter');
+                    if (oldCounter) {
+                        this.counter = parseInt(oldCounter) || 1;
+                    }
+                    this.resetToDefault();
+                }
+            }
+
+            // حفظ العداد في localStorage
+            saveCounter() {
+                const data = {
+                    counter: this.counter,
+                    lastUpdate: new Date().toISOString(),
+                    prefix: this.config.PREFIX,
+                    digits: this.config.DIGITS
+                };
+
+                localStorage.setItem('valenciaOrderCounterData', JSON.stringify(data));
+
+                // تحديث العداد البسيط للتوافق مع الإصدار القديم
+                localStorage.setItem('valenciaOrderCounter', this.counter);
+            }
+
+            // نسخ احتياطي للعداد
+            backupCounter(data) {
+                const backups = JSON.parse(localStorage.getItem('valenciaCounterBackups') || '[]');
+
+                // الاحتفاظ بآخر 10 نسخ احتياطية فقط
+                if (backups.length >= 10) {
+                    backups.shift();
+                }
+
+                backups.push({
+                    ...data,
+                    backupDate: new Date().toISOString()
+                });
+
+                localStorage.setItem('valenciaCounterBackups', JSON.stringify(backups));
+            }
+
+            // إعادة التعيين الافتراضية
+            resetToDefault() {
+                this.counter = 1;
+                this.lastUpdate = new Date();
+                this.saveCounter();
+            }
+
+            // التحقق من الحاجة لإعادة التعيين بناءً على النمط
+            checkReset() {
+                const now = new Date();
+
+                switch (this.config.RESET_MODE) {
+                    case 'DAILY':
+                        if (this.lastUpdate.getDate() !== now.getDate() ||
+                            this.lastUpdate.getMonth() !== now.getMonth() ||
+                            this.lastUpdate.getFullYear() !== now.getFullYear()) {
+                            this.resetCounter(1);
+                        }
+                        break;
+
+                    case 'MONTHLY':
+                        if (this.lastUpdate.getMonth() !== now.getMonth() ||
+                            this.lastUpdate.getFullYear() !== now.getFullYear()) {
+                            this.resetCounter(1);
+                        }
+                        break;
+
+                    case 'YEARLY':
+                        if (this.lastUpdate.getFullYear() !== now.getFullYear()) {
+                            this.resetCounter(1);
+                        }
+                        break;
+
+                    case 'NEVER':
+                    default:
+                        // لا تعيد التعيين
+                        break;
+                }
+            }
+
+            // توليد رقم تسلسلي جديد
+            generate() {
+                // التحقق من الحاجة لإعادة التعيين
+                this.checkReset();
+
+                // إنشاء الرقم
+                let serialNumber = this.config.PREFIX + this.config.SEPARATOR;
+
+                if (this.config.INCLUDE_DATE) {
+                    serialNumber += this.getFormattedDate() + this.config.SEPARATOR;
+                }
+
+                serialNumber += this.counter.toString().padStart(this.config.DIGITS, '0');
+
+                // زيادة العداد
+                this.counter++;
+                this.saveCounter();
+
+                return serialNumber;
+            }
+
+            // الحصول على الرقم الحالي دون زيادة العداد
+            getCurrent() {
+                let serialNumber = this.config.PREFIX + this.config.SEPARATOR;
+
+                if (this.config.INCLUDE_DATE) {
+                    serialNumber += this.getFormattedDate() + this.config.SEPARATOR;
+                }
+
+                serialNumber += this.counter.toString().padStart(this.config.DIGITS, '0');
+
+                return serialNumber;
+            }
+
+            // تنسيق التاريخ
+            getFormattedDate() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = (now.getMonth() + 1).toString().padStart(2, '0');
+                const day = now.getDate().toString().padStart(2, '0');
+
+                switch (this.config.DATE_FORMAT) {
+                    case 'DDMMYYYY':
+                        return day + month + year;
+                    case 'MMDDYYYY':
+                        return month + day + year;
+                    case 'YYMMDD':
+                        return year.toString().slice(-2) + month + day;
+                    case 'YYYYMMDD':
+                    default:
+                        return year + month + day;
+                }
+            }
+
+            // إعادة تعيين العداد
+            resetCounter(newValue = 1) {
+                this.counter = newValue;
+                this.lastUpdate = new Date();
+                this.saveCounter();
+                return this.getCurrent();
+            }
+
+            // تعيين العداد لقيمة محددة
+            setCounter(value) {
+                if (value >= 1) {
+                    this.counter = value;
+                    this.saveCounter();
+                    return true;
+                }
+                return false;
+            }
+
+            // تحديث الإعدادات
+            updateConfig(newConfig) {
+                this.config = { ...this.config, ...newConfig };
+                this.saveConfig();
+                return this.getCurrent();
+            }
+
+            // الحصول على إحصائيات
+            getStats() {
+                return {
+                    currentCounter: this.counter,
+                    nextSerial: this.getCurrent(),
+                    lastUpdate: this.lastUpdate,
+                    config: this.config,
+                    backupsCount: JSON.parse(localStorage.getItem('valenciaCounterBackups') || '[]').length
+                };
+            }
+
+            // استعادة نسخة احتياطية
+            restoreBackup(index) {
+                const backups = JSON.parse(localStorage.getItem('valenciaCounterBackups') || '[]');
+
+                if (backups[index]) {
+                    this.counter = backups[index].counter;
+                    this.lastUpdate = new Date(backups[index].lastUpdate);
+                    this.saveCounter();
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        // =============================================
         // متغيرات النظام
         // =============================================
 
-        let serialNumberCounter = parseInt(localStorage.getItem('valenciaOrderCounter')) || 1;
+        let serialManager;
 
         // =============================================
         // تهيئة الصفحة
         // =============================================
 
         document.addEventListener('DOMContentLoaded', function() {
+            // تهيئة مدير الرقم التسلسلي
+            serialManager = new SerialNumberManager();
+
+            // تعيين التواريخ
             setCurrentDate();
             setEffectiveDate();
-            loadSerialNumber();
+
+            // تحديث عرض الرقم التسلسلي
+            updateSerialNumberDisplay();
+
+            // تحميل البيانات المحفوظة
             loadSavedData();
 
-            // تحديث تلقائي عند تغيير أي حقل
+            // إضافة مستمعات الأحداث
             document.querySelectorAll('.print-field').forEach(field => {
                 field.addEventListener('input', saveData);
                 field.addEventListener('change', saveData);
@@ -1025,28 +1275,24 @@
             document.getElementById('effective-date').value = dateStr;
         }
 
-        function loadSerialNumber() {
-            const savedCounter = localStorage.getItem('valenciaOrderCounter');
-            if (savedCounter) {
-                serialNumberCounter = parseInt(savedCounter);
-            } else {
-                serialNumberCounter = 1;
-                localStorage.setItem('valenciaOrderCounter', serialNumberCounter);
-            }
-            updateSerialNumberDisplay();
-        }
-
+        // تحديث عرض الرقم التسلسلي
         function updateSerialNumberDisplay() {
-            const serialNum = `ORD-${serialNumberCounter.toString().padStart(6, '0')}`;
+            if (!serialManager) return;
+
+            const serialNum = serialManager.getCurrent();
 
             document.getElementById('serial-number').textContent = serialNum;
             document.getElementById('current-serial-display').textContent = serialNum;
         }
 
+        // دالة إنشاء رقم تسلسلي جديد
         function generateNewSerialNumber() {
-            serialNumberCounter = parseInt(serialNumberCounter) + 1;
-            localStorage.setItem('valenciaOrderCounter', serialNumberCounter);
+            if (!serialManager) return;
+
+            const newSerial = serialManager.generate();
             updateSerialNumberDisplay();
+
+            return newSerial;
         }
 
         // =============================================
@@ -1095,23 +1341,224 @@
         // دالة تصفير الرقم التسلسلي
         // =============================================
         function resetSerialNumber() {
-            serialNumberCounter = 1;
-            localStorage.setItem('valenciaOrderCounter', serialNumberCounter);
+            if (!serialManager) return;
+
+            serialManager.resetCounter(1);
             updateSerialNumberDisplay();
+
             showAutoSendNotification('✅ تم تصفير الرقم التسلسلي بنجاح', 'success');
             closeResetConfirmation();
         }
 
         function showResetConfirmation() {
-            document.getElementById('resetConfirmationModal').style.display = 'flex';
+            if (!serialManager) return;
+
+            const currentSerial = serialManager.getCurrent();
+            const nextSerial = serialManager.config.PREFIX + '-000001';
+
+            const modal = document.getElementById('resetConfirmationModal');
+            modal.innerHTML = `
+                <div class="confirmation-content">
+                    <h3><i class="fas fa-exclamation-triangle"></i> تأكيد تصفير الرقم التسلسلي</h3>
+
+                    <div style="text-align: right; margin: 10px 0; padding: 8px; background: #f8f9fa; border-radius: 3px;">
+                        <div style="margin-bottom: 5px;">
+                            <strong>الرقم التسلسلي الحالي:</strong>
+                            <span style="color: #c53030; font-weight: bold; margin-right: 10px;">${currentSerial}</span>
+                        </div>
+                        <div>
+                            <strong>الرقم التسلسلي الجديد:</strong>
+                            <span style="color: #38a169; font-weight: bold; margin-right: 10px;">${nextSerial}</span>
+                        </div>
+                    </div>
+
+                    <p>هل أنت متأكد من أنك تريد تصفير الرقم التسلسلي؟</p>
+                    <p style="font-size: 9pt; color: #718096;">
+                        <i class="fas fa-info-circle"></i>
+                        سيتم فقدان تسلسل الأرقام الحالي ولا يمكن التراجع عن هذا الإجراء
+                    </p>
+
+                    <div class="confirmation-buttons">
+                        <button class="btn-confirm" onclick="confirmResetSerial()">
+                            <i class="fas fa-check"></i> نعم، تصفير
+                        </button>
+                        <button class="btn-cancel" onclick="closeResetConfirmation()">
+                            <i class="fas fa-times"></i> إلغاء
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.style.display = 'flex';
         }
 
         function closeResetConfirmation() {
-            document.getElementById('resetConfirmationModal').style.display = 'none';
+            const modal = document.getElementById('resetConfirmationModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
         }
 
         function confirmResetSerial() {
             resetSerialNumber();
+        }
+
+        // =============================================
+        // إدارة الرقم التسلسلي
+        // =============================================
+
+        function openSerialManager() {
+            if (!serialManager) return;
+
+            const stats = serialManager.getStats();
+            const backups = JSON.parse(localStorage.getItem('valenciaCounterBackups') || '[]');
+
+            const modal = document.createElement('div');
+            modal.className = 'confirmation-modal';
+            modal.id = 'serialManagerModal';
+            modal.style.display = 'flex';
+
+            modal.innerHTML = `
+                <div class="confirmation-content" style="max-width: 500px;">
+                    <h3><i class="fas fa-cog"></i> إدارة الرقم التسلسلي</h3>
+
+                    <div style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 4px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div style="font-weight: bold;">الرقم الحالي:</div>
+                            <div style="color: #1a365d; font-weight: bold; font-size: 14pt;">${stats.nextSerial}</div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div>القيمة العددية:</div>
+                            <div>${stats.currentCounter}</div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <div>آخر تحديث:</div>
+                            <div>${new Date(stats.lastUpdate).toLocaleString('ar-EG')}</div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>عدد النسخ الاحتياطية:</div>
+                            <div>${stats.backupsCount}</div>
+                        </div>
+                    </div>
+
+                    <div style="margin: 15px 0;">
+                        <h4 style="margin-bottom: 10px; color: #2c5282; font-size: 10.5pt;">
+                            <i class="fas fa-sliders-h"></i> الإعدادات
+                        </h4>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                            <div>
+                                <label style="display: block; margin-bottom: 3px; font-size: 9pt;">البادئة:</label>
+                                <input type="text" id="serial-prefix" value="${stats.config.PREFIX}"
+                                       style="width: 100%; padding: 4px;">
+                            </div>
+
+                            <div>
+                                <label style="display: block; margin-bottom: 3px; font-size: 9pt;">عدد الأرقام:</label>
+                                <input type="number" id="serial-digits" value="${stats.config.DIGITS}" min="3" max="10"
+                                       style="width: 100%; padding: 4px;">
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 10px;">
+                            <label style="display: block; margin-bottom: 3px; font-size: 9pt;">نمط إعادة التعيين:</label>
+                            <select id="serial-reset-mode" style="width: 100%; padding: 4px;">
+                                <option value="NEVER" ${stats.config.RESET_MODE === 'NEVER' ? 'selected' : ''}>لا تعيد أبداً</option>
+                                <option value="DAILY" ${stats.config.RESET_MODE === 'DAILY' ? 'selected' : ''}>يومياً</option>
+                                <option value="MONTHLY" ${stats.config.RESET_MODE === 'MONTHLY' ? 'selected' : ''}>شهرياً</option>
+                                <option value="YEARLY" ${stats.config.RESET_MODE === 'YEARLY' ? 'selected' : ''}>سنوياً</option>
+                            </select>
+                        </div>
+
+                        <div style="display: flex; align-items: center; margin-bottom: 10px;">
+                            <input type="checkbox" id="serial-include-date" ${stats.config.INCLUDE_DATE ? 'checked' : ''}
+                                   style="margin-left: 8px;">
+                            <label for="serial-include-date" style="font-size: 9pt;">تضمين التاريخ في الرقم التسلسلي</label>
+                        </div>
+                    </div>
+
+                    ${backups.length > 0 ? `
+                    <div style="margin: 15px 0;">
+                        <h4 style="margin-bottom: 10px; color: #2c5282; font-size: 10.5pt;">
+                            <i class="fas fa-history"></i> النسخ الاحتياطية
+                        </h4>
+                        <div style="max-height: 150px; overflow-y: auto; font-size: 8.5pt;">
+                            ${backups.map((backup, index) => `
+                                <div style="padding: 5px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between;">
+                                    <div>
+                                        ${backup.prefix}-${backup.counter.toString().padStart(backup.digits || 6, '0')}
+                                        <br><small>${new Date(backup.backupDate).toLocaleString('ar-EG')}</small>
+                                    </div>
+                                    <button onclick="restoreBackup(${index})" style="padding: 2px 6px; font-size: 8pt; background: #4a5568; color: white; border: none; border-radius: 2px; cursor: pointer;">
+                                        <i class="fas fa-undo"></i> استعادة
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <div class="confirmation-buttons" style="justify-content: space-between; margin-top: 15px;">
+                        <div>
+                            <button class="btn-confirm" onclick="saveSerialSettings()" style="padding: 6px 12px;">
+                                <i class="fas fa-save"></i> حفظ الإعدادات
+                            </button>
+                        </div>
+
+                        <div>
+                            <button class="btn-cancel" onclick="closeSerialManager()" style="padding: 6px 12px;">
+                                <i class="fas fa-times"></i> إغلاق
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function closeSerialManager() {
+            const modal = document.getElementById('serialManagerModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function saveSerialSettings() {
+            if (!serialManager) return;
+
+            const newConfig = {
+                PREFIX: document.getElementById('serial-prefix').value || 'ORD',
+                DIGITS: parseInt(document.getElementById('serial-digits').value) || 6,
+                RESET_MODE: document.getElementById('serial-reset-mode').value || 'NEVER',
+                INCLUDE_DATE: document.getElementById('serial-include-date').checked
+            };
+
+            serialManager.updateConfig(newConfig);
+            updateSerialNumberDisplay();
+
+            showAutoSendNotification('✅ تم حفظ إعدادات الرقم التسلسلي', 'success');
+            closeSerialManager();
+        }
+
+        function restoreBackup(index) {
+            if (!serialManager) return;
+
+            if (confirm('هل تريد استعادة هذه النسخة الاحتياطية؟')) {
+                const success = serialManager.restoreBackup(index);
+
+                if (success) {
+                    updateSerialNumberDisplay();
+                    showAutoSendNotification('✅ تم استعادة النسخة الاحتياطية', 'success');
+                    closeSerialManager();
+                    setTimeout(openSerialManager, 500);
+                } else {
+                    showAutoSendNotification('❌ فشل استعادة النسخة الاحتياطية', 'error');
+                }
+            }
         }
 
         // =============================================
