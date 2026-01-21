@@ -10,7 +10,7 @@
             size: A4;
             margin: 0.3cm !important;
         }
-        
+
         :root {
             --primary-color: #1a365d;
             --secondary-color: #c19a53;
@@ -18,7 +18,7 @@
             --light-color: #f8f9fa;
             --dark-color: #2d3748;
         }
-        
+
         body {
             font-family: 'Arial', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -28,7 +28,7 @@
             font-size: 10pt;
             line-height: 1.5;
         }
-        
+
         .header {
             text-align: center;
             margin-bottom: 8px;
@@ -36,7 +36,7 @@
             border-bottom: 2px solid #c19a53;
             position: relative;
         }
-        
+
         .company-name {
             font-size: 20pt;
             font-weight: bold;
@@ -44,7 +44,7 @@
             font-family: 'Times New Roman', serif;
             margin-bottom: 1px;
         }
-        
+
         .company-subtitle {
             font-size: 14pt;
             color: #2c5282;
@@ -53,7 +53,7 @@
             padding-top: 1px;
             border-top: 1px solid #c19a53;
         }
-        
+
         .department {
             font-size: 12pt;
             color: #c19a53;
@@ -62,7 +62,7 @@
             font-family: 'Times New Roman', serif;
             padding: 2px;
         }
-        
+
         .document-info {
             display: flex;
             justify-content: space-between;
@@ -73,7 +73,7 @@
             border-radius: 4px;
             border: 1px solid #e2e8f0;
         }
-        
+
         .document-date {
             font-size: 9pt;
             color: #2d3748;
@@ -81,7 +81,7 @@
             flex: 1;
             text-align: right;
         }
-        
+
         .document-title {
             text-align: center;
             font-size: 18pt;
@@ -92,7 +92,7 @@
             padding: 4px;
             flex: 2;
         }
-        
+
         .document-number {
             font-size: 11pt;
             color: #c19a53;
@@ -106,7 +106,7 @@
             flex: 1;
             margin-left: 6px;
         }
-        
+
         .control-panel {
             background: linear-gradient(135deg, #1a365d, #2c5282);
             color: white;
@@ -116,7 +116,7 @@
             box-shadow: 0 3px 6px rgba(0,0,0,0.2);
             border: 1px solid rgba(255,255,255,0.1);
         }
-        
+
         .btn {
             padding: 6px 12px;
             margin: 5px;
@@ -133,24 +133,24 @@
             min-width: 130px;
             font-family: 'Times New Roman', serif;
         }
-        
+
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 3px 6px rgba(0,0,0,0.2);
         }
-        
-        .btn-print { 
-            background: linear-gradient(135deg, #4a5568, #2d3748); 
+
+        .btn-print {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
             color: white;
             border: 1px solid #2d3748;
         }
-        
+
         .btn-reset {
             background: linear-gradient(135deg, #e53e3e, #c53030);
             color: white;
             border: 1px solid #c53030;
         }
-        
+
         textarea, input, select {
             border: 1px solid #cbd5e0;
             border-radius: 2px;
@@ -163,13 +163,13 @@
             box-sizing: border-box;
             height: 28px;
         }
-        
+
         textarea:focus, input:focus, select:focus {
             border-color: #2c5282;
             box-shadow: 0 0 0 1px rgba(44, 82, 130, 0.2);
             outline: none;
         }
-        
+
         .decision-text {
             min-height: 120px;
             height: 120px;
@@ -181,16 +181,16 @@
             border-radius: 3px;
             resize: vertical;
         }
-        
+
         .signature-section {
-            margin-top: 15px;
+            margin-top: 25px;
             padding-top: 8px;
             border-top: 2px solid #c19a53;
             background: #f8fafc;
             padding: 8px;
             border-radius: 4px;
         }
-        
+
         .signature-box {
             border: 1px solid #cbd5e0;
             padding: 6px;
@@ -202,7 +202,7 @@
             justify-content: space-between;
             position: relative;
         }
-        
+
         .signature-line {
             border-bottom: 1px solid #2d3748;
             margin-top: 8px;
@@ -211,7 +211,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         .signature-box strong {
             font-size: 9.5pt;
             color: #1a365d;
@@ -219,20 +219,20 @@
             margin-bottom: 4px;
             display: block;
         }
-        
+
         .signature-box div {
             font-size: 7.5pt;
             margin-top: 1px;
             color: #4a5568;
         }
-        
+
         .signature-box i.fa-stamp {
             font-size: 16pt;
             color: #c19a53;
             margin-top: 2px;
             opacity: 0.9;
         }
-        
+
         .document-content {
             background: white;
             padding: 10px;
@@ -240,7 +240,7 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             margin-bottom: 12px;
         }
-        
+
         .order-intro {
             font-size: 10.5pt;
             text-align: justify;
@@ -251,14 +251,14 @@
             border-radius: 3px;
             border-right: 2px solid #c19a53;
         }
-        
+
         /* الطباعة - كل المحتوى في صفحة واحدة */
         @media print {
             @page {
                 size: A4 portrait;
                 margin: 0.5cm !important;
             }
-            
+
             body {
                 font-size: 10pt !important;
                 line-height: 1.4 !important;
@@ -269,35 +269,58 @@
                 width: 100% !important;
                 max-height: 100vh !important;
                 overflow: hidden !important;
+                position: relative;
             }
-            
-            .no-print { 
-                display: none !important; 
+
+            .no-print {
+                display: none !important;
             }
-            
+
             .content-container {
                 margin: 0 !important;
                 padding: 0 !important;
                 box-shadow: none !important;
                 max-width: 100% !important;
-                height: 100vh;
+                height: auto;
                 display: flex !important;
                 flex-direction: column !important;
+                margin-top: 125px !important;
+                margin-bottom: 120px !important;
             }
-            
+
+            /* الرأس الثابت للطباعة */
+            .print-header {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 9999 !important;
+                display: block !important;
+                height: 110px !important;
+                text-align: center !important;
+                background: white !important;
+                padding: 5px 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                page-break-inside: avoid !important;
+            }
+
+            .print-header img {
+                max-width: 100% !important;
+                max-height: 80px !important;
+                object-fit: contain !important;
+            }
+
             .header {
-                border-bottom: 1px solid black !important;
-                padding: 2px 0 !important;
-                margin-bottom: 8px !important;
-                flex-shrink: 0;
+                display: none !important;
             }
-            
+
             .company-name {
                 font-size: 18pt !important;
                 color: black !important;
                 margin-bottom: 2px !important;
             }
-            
+
             .company-subtitle {
                 font-size: 12pt !important;
                 color: black !important;
@@ -305,7 +328,7 @@
                 border-top: 1px solid black !important;
                 padding-top: 0 !important;
             }
-            
+
             .department {
                 font-size: 11pt !important;
                 color: black !important;
@@ -313,7 +336,7 @@
                 padding: 1px !important;
                 margin: 3px 0 !important;
             }
-            
+
             .document-info {
                 background: none !important;
                 border: 1px solid black !important;
@@ -323,7 +346,7 @@
                 justify-content: space-between !important;
                 align-items: center !important;
             }
-            
+
             .document-title {
                 font-size: 14pt !important;
                 color: black !important;
@@ -334,7 +357,7 @@
                 padding: 2px !important;
                 flex: 2;
             }
-            
+
             .document-number {
                 border: 1px solid black !important;
                 color: black !important;
@@ -344,13 +367,13 @@
                 flex: 1;
                 margin-left: 4px !important;
             }
-            
+
             .document-date {
                 font-size: 9pt !important;
                 flex: 1;
                 text-align: right !important;
             }
-            
+
             .document-content {
                 box-shadow: none !important;
                 padding: 0 !important;
@@ -359,8 +382,9 @@
                 display: flex !important;
                 flex-direction: column !important;
                 min-height: 0 !important;
+                page-break-inside: avoid !important;
             }
-            
+
             .order-intro {
                 background: none !important;
                 border: 1px solid #ccc !important;
@@ -368,8 +392,9 @@
                 margin: 8px 0 !important;
                 font-size: 10pt !important;
                 line-height: 1.5 !important;
+                page-break-inside: avoid !important;
             }
-            
+
             .decision-text {
                 border: 1px solid #ccc !important;
                 background: none !important;
@@ -381,23 +406,24 @@
                 padding: 4px !important;
                 margin: 4px 0 8px 0 !important;
                 flex: 1;
+                page-break-inside: avoid !important;
             }
-            
+
             .info-row {
                 margin-bottom: 6px !important;
                 page-break-inside: avoid !important;
             }
-            
+
             .info-item {
                 min-width: 160px !important;
                 margin-bottom: 4px !important;
             }
-            
+
             .info-item label {
                 font-size: 9pt !important;
                 margin-bottom: 2px !important;
             }
-            
+
             .signature-section {
                 border-top: 2px solid black !important;
                 background: none !important;
@@ -406,7 +432,7 @@
                 flex-shrink: 0;
                 page-break-inside: avoid !important;
             }
-            
+
             .signature-box {
                 border: 1px solid black !important;
                 background: none !important;
@@ -416,24 +442,24 @@
                 flex-direction: column !important;
                 justify-content: space-between !important;
             }
-            
+
             .signature-line {
                 margin-top: 4px !important;
                 margin-bottom: 2px !important;
             }
-            
+
             .signature-box strong {
                 font-size: 9pt !important;
             }
-            
+
             .signature-box div {
                 font-size: 7pt !important;
             }
-            
+
             .signature-box i.fa-stamp {
                 font-size: 12pt !important;
             }
-            
+
             textarea, input, select {
                 border: none !important;
                 background: none !important;
@@ -443,41 +469,59 @@
                 height: auto !important;
                 min-height: auto !important;
             }
-            
+
             select {
                 appearance: none !important;
             }
-            
+
             .print-only {
-                font-size: 7pt !important;
-                margin-top: 8px !important;
-                padding-top: 4px !important;
-                border-top: 1px solid #ccc !important;
                 display: block !important;
+            }
+
+            /* القدم الثابت للطباعة */
+            .print-footer {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 9999 !important;
+                display: block !important;
+                height: 110px !important;
                 text-align: center !important;
-                flex-shrink: 0;
+                background: white !important;
+                padding: 5px 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                page-break-inside: avoid !important;
+                font-size: 8pt !important;
             }
-            
-            .control-panel, #auto-send-notification, .confirmation-modal { 
-                display: none !important; 
+
+            .print-footer img {
+                max-width: 100% !important;
+                max-height: 100px !important;
+                object-fit: contain !important;
             }
-            
+
+            .control-panel, #auto-send-notification, .confirmation-modal {
+                display: none !important;
+            }
+
             /* تحسين توزيع العناصر */
             .document-content > * {
                 margin-bottom: 6px !important;
             }
-            
+
             .document-content > *:last-child {
                 margin-bottom: 0 !important;
             }
-            
+
             /* توزيع التواقيع بشكل متساو */
             .signature-section > div:first-child {
                 display: flex !important;
                 gap: 8px !important;
                 justify-content: space-between !important;
             }
-            
+
             /* معلومات التنفيذ والمصدّر */
             .no-break[style*="margin-top: 10px"] {
                 margin-top: 8px !important;
@@ -487,7 +531,7 @@
                 justify-content: space-between !important;
                 flex-shrink: 0;
             }
-            
+
             /* منع انقسام المحتوى بين الصفحات */
             .avoid-break, .no-break {
                 page-break-inside: avoid !important;
@@ -495,54 +539,54 @@
                 page-break-after: avoid !important;
                 break-inside: avoid !important;
             }
-            
+
             /* ضمان أن المحتوى لا يتجاوز صفحة واحدة */
             .document-content > *:last-child {
                 page-break-after: avoid !important;
             }
-            
+
             /* توحيد الألوان للطباعة */
             * {
                 color: black !important;
             }
         }
-        
+
         @media (max-width: 768px) {
             .btn { min-width: 110px; padding: 4px 6px; font-size: 9pt; }
             .control-panel { padding: 8px; }
-            
+
             .company-name {
                 font-size: 16pt;
             }
-            
+
             .company-subtitle {
                 font-size: 10pt;
             }
-            
+
             .department {
                 font-size: 9pt;
             }
-            
+
             .document-title {
                 font-size: 14pt;
             }
-            
+
             .confirmation-content {
                 width: 95%;
                 padding: 10px;
             }
-            
+
             .document-info {
                 flex-direction: column;
                 gap: 4px;
             }
-            
+
             .signature-box {
                 height: 75px;
                 padding: 5px;
             }
         }
-        
+
         /* تنسيقات إضافية */
         .info-row {
             display: flex;
@@ -550,12 +594,12 @@
             margin-bottom: 6px;
             flex-wrap: wrap;
         }
-        
+
         .info-item {
             flex: 1;
             min-width: 150px;
         }
-        
+
         .info-item label {
             display: block;
             margin-bottom: 2px;
@@ -563,7 +607,7 @@
             color: #2c5282;
             font-size: 9pt;
         }
-        
+
         .serial-display {
             background: rgba(255,255,255,0.1);
             padding: 4px 8px;
@@ -574,13 +618,13 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .serial-display span {
             font-weight: bold;
             color: #c19a53;
             font-size: 9.5pt;
         }
-        
+
         .auto-calculation-note {
             font-size: 7.5pt;
             color: #718096;
@@ -588,7 +632,7 @@
             margin-top: 4px;
             font-style: italic;
         }
-        
+
         .content-container {
             max-width: 800px;
             margin: 0 auto;
@@ -598,17 +642,22 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
             margin-bottom: 10px;
         }
-        
+
         /* تصميم مضغوط */
         .compact-field {
             margin: 0 !important;
             padding: 2px 4px !important;
         }
-        
+
         .no-break {
             page-break-inside: avoid;
         }
-        
+
+        /* إخفاء الرأس والقدم في العرض العادي */
+        .print-header, .print-footer {
+            display: none;
+        }
+
         /* نافذة الإشعار التلقائي */
         #auto-send-notification {
             position: fixed;
@@ -626,35 +675,35 @@
             gap: 6px;
             border: 1px solid;
         }
-        
+
         #auto-send-notification.success {
             background: #d4edda;
             color: #155724;
             border-color: #c3e6cb;
         }
-        
+
         #auto-send-notification.error {
             background: #f8d7da;
             color: #721c24;
             border-color: #f5c6cb;
         }
-        
+
         #auto-send-notification.info {
             background: #d1ecf1;
             color: #0c5460;
             border-color: #bee5eb;
         }
-        
+
         @keyframes slideIn {
             from { transform: translateX(-100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
-        
+
         @keyframes fadeOut {
             from { opacity: 1; }
             to { opacity: 0; }
         }
-        
+
         /* نافذة التأكيد */
         .confirmation-modal {
             display: none;
@@ -668,7 +717,7 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .confirmation-content {
             background: white;
             padding: 12px;
@@ -677,21 +726,21 @@
             max-width: 350px;
             text-align: center;
         }
-        
+
         .confirmation-content h3 {
             color: #1a365d;
             margin-bottom: 8px;
             font-family: 'Times New Roman', serif;
             font-size: 11pt;
         }
-        
+
         .confirmation-buttons {
             display: flex;
             justify-content: center;
             gap: 6px;
             margin-top: 12px;
         }
-        
+
         .btn-confirm {
             background: linear-gradient(135deg, #38a169, #2f855a);
             color: white;
@@ -702,7 +751,7 @@
             font-weight: bold;
             font-size: 9pt;
         }
-        
+
         .btn-cancel {
             background: linear-gradient(135deg, #a0aec0, #718096);
             color: white;
@@ -733,7 +782,6 @@
             </div>
         </div>
     </div>
-    
     <!-- لوحة التحكم -->
     <div class="control-panel no-print">
         <div style="text-align: center; margin-bottom: 6px;">
@@ -744,7 +792,7 @@
                 شركة فالنسيا لتجارة الرخام والحجر الطبيعي
             </h4>
         </div>
-        
+
         <div style="text-align: center;">
             <button class="btn btn-print" onclick="prepareAndPrint()">
                 <i class="fas fa-paper-plane"></i> طباعة وإرسال تلقائي
@@ -753,17 +801,17 @@
                 <i class="fas fa-redo"></i> تصفير الرقم التسلسلي
             </button>
         </div>
-        
+
         <div class="serial-display">
             <div>رقم الأمر الإداري الحالي:</div>
             <div><span id="current-serial-display">ORD-000001</span></div>
         </div>
-        
+
         <div class="auto-calculation-note">
             <i class="fas fa-info-circle"></i> يتم حفظ البيانات تلقائياً في المتصفح
         </div>
     </div>
-    
+
     <!-- نموذج الأمر الإداري -->
     <div class="content-container no-break">
         <!-- الترويسة -->
@@ -771,7 +819,7 @@
             <div class="company-name">شركة فالنسيا لتجارة الرخام</div>
             <div class="company-subtitle">والحجـــــــر الطـبيــعــــي</div>
             <div class="department">ادارة المـــوارد البشريـــة</div>
-            
+
             <div class="document-info">
                 <div class="document-date" id="current-date">--/--/----</div>
                 <div class="document-title">أمـــر اداري</div>
@@ -781,7 +829,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="document-content">
             <!-- معلومات الأمر الإداري -->
             <div class="info-row no-break">
@@ -794,36 +842,44 @@
                         <option value="إنذار">إنذار</option>
                         <option value="خصم">خصم</option>
                         <option value="مكافأة">مكافأة</option>
+                        <option value="تعديل راتب">تعديل راتب</option>
                         <option value="إجازة">إجازة</option>
                         <option value="إنهاء خدمة">إنهاء خدمة</option>
                         <option value="أخرى">أخرى</option>
                     </select>
                 </div>
-                
+
                 <div class="info-item">
                     <label for="employee-name">اسم الموظف:</label>
-                    <input type="text" id="employee-name" placeholder="الاسم الكامل" class="print-field compact-field">
+                    <select id="employee-name" class="print-field compact-field">
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value="">برينس انوبيل</option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
+                        <option value=""></option>
                 </div>
-                
+
                 <div class="info-item">
                     <label for="employee-id">رقم الهوية:</label>
                     <input type="text" id="employee-id" placeholder="رقم الهوية / الإقامة" class="print-field compact-field">
                 </div>
             </div>
-            
+
             <div class="info-row no-break">
                 <div class="info-item">
                     <label for="job-title">المسمى الوظيفي:</label>
                     <input type="text" id="job-title" placeholder="المسمى الوظيفي" class="print-field compact-field">
                 </div>
-                
+
                 <div class="info-item">
                     <label for="department-name">القسم:</label>
                     <select id="department-name" class="print-field compact-field">
                         <option value="">اختر القسم</option>
                         <option value="المحاسبة">المحاسبة</option>
                         <option value="المبيعات">المبيعات</option>
-                        <option value="ادارة مستودعات">ادارة مستودعات</option>
+                        <option value="ادارة مستودعات">المستودعات</option>
                         <option value="النقليات">النقليات</option>
                         <option value="الاليات">الاليات</option>
                         <option value="المشاريع">المشاريع</option>
@@ -832,37 +888,34 @@
                         <option value="السوشيال ميديا">السوشيال ميديا</option>
                     </select>
                 </div>
-                
+
                 <div class="info-item">
-                    <label for="supervisor-name">المشرف المباشر:</label>
+                    <label for="supervisor-name">المسؤول المباشر:</label>
                     <select id="supervisor-name" class="print-field compact-field">
-                        <option value="">اختر المشرف</option>
-                        <option value="مهند نيازي السلق">أبو طارق - المحاسبة</option>
-                        <option value="ركان إياد زيعز">ركان - المبيعات</option>
-                        <option value="ماجد يوسف ابراهيم">ماجد - ادارة مستودعات</option>
-                        <option value="ركان إياد زيعز">ركان - النقليات</option>
-                        <option value="احمد ماهر عبدالرازق">احمد ماهر - الاليات</option>
-                        <option value="مأمون احمد حجازي">أبو يزن - المشاريع</option>
-                        <option value="أنس محمد السرداني">ابو وائل - الرخام</option>
+                        <option value="">اختر المسؤول</option>
+                        <option value="مهند نيازي السلق">مهند نيازي السلق</option>
+                        <option value="ركان إياد زياز">ركان اياد زياز</option>
+                        <option value="مأمون احمد حجازي">مامون احمد حجازي</option>
+                        <option value="أنس محمد السرداني">انس محمد السرداني</option>
                         <option value="مكتب مصر">رمضان - التصميم</option>
-                        <option value="أمين احمد حجازي">ابو وديع - السوشيال ميديا</option>
+                        <option value="أمين احمد حجازي">امين احمد حجازي</option>
                     </select>
                 </div>
             </div>
-            
+
             <!-- نص الأمر الإداري -->
             <div class="order-intro no-break">
                 قررنا نحن شركة فالنسيا للرخام والحجر الطبيعي ادارة الموارد البشــــــرية باتخاذ القرار التالي :-
             </div>
-            
+
             <div class="no-break">
                 <label for="decision-details" style="display: block; margin-bottom: 4px; font-weight: bold; color: #2c5282; font-size: 9.5pt;">
                     تفاصيل القرار:
                 </label>
-                <textarea id="decision-details" class="decision-text print-field no-break" 
+                <textarea id="decision-details" class="decision-text print-field no-break"
                           placeholder="اكتب هنا تفاصيل القرار الإداري..."></textarea>
             </div>
-            
+
             <!-- تاريخ التنفيذ والمصدّر -->
             <div class="no-break" style="margin-top: 10px; display: flex; gap: 8px;">
                 <div style="flex: 1;">
@@ -871,7 +924,7 @@
                     </label>
                     <input type="text" id="effective-date" class="print-field compact-field" placeholder="يوم/شهر/سنة">
                 </div>
-                
+
                 <div style="flex: 1;">
                     <label for="issuer-name" style="display: block; margin-bottom: 2px; font-weight: bold; color: #2c5282; font-size: 9.5pt;">
                         اسم مُصْدِر الأمر:
@@ -879,13 +932,13 @@
                     <input type="text" id="issuer-name" class="print-field compact-field" placeholder="اسم مسؤول إدارة الموارد البشرية">
                 </div>
             </div>
-            
+
             <!-- التواقيع -->
             <div class="signature-section no-break">
                 <div style="text-align: center; margin-bottom: 6px; font-weight: bold; font-size: 9.5pt; color: #1a365d;">
                     تواقيع المسؤولين
                 </div>
-                
+
                 <div style="display: flex; gap: 6px;">
                     <div style="flex: 1;">
                         <div class="signature-box">
@@ -895,7 +948,7 @@
                             <div style="font-size:7.5pt;">التاريخ: ________________</div>
                         </div>
                     </div>
-                    
+
                     <div style="flex: 1;">
                         <div class="signature-box">
                             <strong>توقيع مدير القسم</strong>
@@ -904,24 +957,16 @@
                             <div style="font-size:7.5pt;">التاريخ: ________________</div>
                         </div>
                     </div>
-                    
+
                     <div style="flex: 1;">
                         <div class="signature-box">
                             <strong>ختم الموارد البشرية</strong>
                             <div style="margin-top: 2px; font-size: 14pt; color: #c19a53;">
                                 <i class="fas fa-stamp"></i>
                             </div>
-                            <div style="margin-top: 4px; font-size:7.5pt;">الاسم: ________________</div>
-                            <div style="font-size:7.5pt;">التاريخ: ________________</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <!-- معلومات النظام في الطباعة -->
-            <div style="text-align: center; margin-top: 6px; font-size: 6pt; color: #718096; padding-top: 2px; display: none;" class="print-only">
-                <div>تم إنشاء هذا الأمر آلياً عبر نظام إصدار الأوامر الإلكتروني لشركة فالنسيا للرخام</div>
-                <div>الرقم التسلسلي: <span id="print-serial-number">ORD-000001</span> | تاريخ الإنشاء: <span id="print-current-date"></span></div>
             </div>
         </div>
     </div>
@@ -930,61 +975,60 @@
         // =============================================
         // إعدادات بوت تليجرام الثابت
         // =============================================
-        
+
         const TELEGRAM_CONFIG = {
             // البوت الثابت المخصص للشركة
             BOT_TOKEN: "8281101424:AAE6ehBJYqVyf3DuvhnU2Lx0jFhcDA7-O5o",
-            
+
             // قنوات التليجرام الثابتة للشركة
             CHANNELS: {
                 HR: "-1003522590294",           // قناة الموارد البشرية
             }
         };
-        
+
         // =============================================
         // متغيرات النظام
         // =============================================
-        
+
         let serialNumberCounter = localStorage.getItem('valenciaOrderCounter') || 1;
-        
+
         // =============================================
         // تهيئة الصفحة
         // =============================================
-        
+
         document.addEventListener('DOMContentLoaded', function() {
             setCurrentDate();
             setEffectiveDate();
             updateSerialNumberDisplay();
             loadSerialNumber();
             loadSavedData();
-            
+
             // تحديث تلقائي عند تغيير أي حقل
             document.querySelectorAll('.print-field').forEach(field => {
                 field.addEventListener('input', saveData);
             });
         });
-        
+
         function setCurrentDate() {
             const now = new Date();
             const day = now.getDate();
             const month = now.getMonth() + 1;
             const year = now.getFullYear();
             const dateStr = `${day}-${month}-${year}`;
-            
+
             document.getElementById('current-date').textContent = dateStr;
-            document.getElementById('print-current-date').textContent = dateStr;
         }
-        
+
         function setEffectiveDate() {
             const now = new Date();
             const day = now.getDate();
             const month = now.getMonth() + 1;
             const year = now.getFullYear();
             const dateStr = `${day}/${month}/${year}`;
-            
+
             document.getElementById('effective-date').value = dateStr;
         }
-        
+
         function loadSerialNumber() {
             const savedCounter = localStorage.getItem('valenciaOrderCounter');
             if (savedCounter) {
@@ -995,25 +1039,24 @@
             }
             updateSerialNumberDisplay();
         }
-        
+
         function updateSerialNumberDisplay() {
             const serialNum = `ORD-${serialNumberCounter.toString().padStart(6, '0')}`;
-            
+
             document.getElementById('serial-number').textContent = serialNum;
-            document.getElementById('print-serial-number').textContent = serialNum;
             document.getElementById('current-serial-display').textContent = serialNum;
         }
-        
+
         function generateNewSerialNumber() {
             serialNumberCounter = parseInt(serialNumberCounter) + 1;
             localStorage.setItem('valenciaOrderCounter', serialNumberCounter);
             updateSerialNumberDisplay();
         }
-        
+
         // =============================================
         // حفظ واسترجاع البيانات
         // =============================================
-        
+
         function saveData() {
             const data = {
                 orderType: document.getElementById('order-type').value,
@@ -1026,19 +1069,19 @@
                 effectiveDate: document.getElementById('effective-date').value,
                 issuerName: document.getElementById('issuer-name').value
             };
-            
+
             localStorage.setItem('valenciaOrderData', JSON.stringify(data));
         }
-        
+
         function loadSavedData() {
             const savedData = localStorage.getItem('valenciaOrderData');
             if (savedData) {
                 const data = JSON.parse(savedData);
-                
+
                 document.getElementById('order-type').value = data.orderType || '';
                 document.getElementById('employee-name').value = data.employeeName || '';
                 document.getElementById('employee-id').value = data.employeeId || '';
-                document.getElementById('job-title').value = data.jobTitle || '';
+                document.getElementById('job-title').value = data.jTitle || '';
                 document.getElementById('department-name').value = data.departmentName || '';
                 document.getElementById('supervisor-name').value = data.supervisorName || '';
                 document.getElementById('decision-details').value = data.decisionDetails || '';
@@ -1046,7 +1089,7 @@
                 document.getElementById('issuer-name').value = data.issuerName || '';
             }
         }
-        
+
         // =============================================
         // دالة تصفير الرقم التسلسلي
         // =============================================
@@ -1057,19 +1100,19 @@
             showAutoSendNotification('✅ تم تصفير الرقم التسلسلي بنجاح', 'success');
             closeResetConfirmation();
         }
-        
+
         function showResetConfirmation() {
             document.getElementById('resetConfirmationModal').style.display = 'flex';
         }
-        
+
         function closeResetConfirmation() {
             document.getElementById('resetConfirmationModal').style.display = 'none';
         }
-        
+
         function confirmResetSerial() {
             resetSerialNumber();
         }
-        
+
         // =============================================
         // دالة ضبط التنسيق للطباعة
         // =============================================
@@ -1083,10 +1126,10 @@
                 const calculatedHeight = Math.max(minHeight, lines * 18);
                 textarea.style.height = calculatedHeight + 'px';
             }
-            
+
             // إضافة فئة الطباعة للجسم
             document.body.classList.add('printing');
-            
+
             // إعداد القيم للطباعة
             document.querySelectorAll('.print-field').forEach(field => {
                 if (field.tagName === 'SELECT') {
@@ -1098,40 +1141,40 @@
                     field.setAttribute('data-print-value', field.value);
                 }
             });
-            
-            // إظهار عناصر الطباعة
-            document.querySelectorAll('.print-only').forEach(el => {
+
+            // إظهار عناصر الطباعة (الرأس والقدم)
+            document.querySelectorAll('.print-header, .print-footer').forEach(el => {
                 el.style.display = 'block';
             });
         }
-        
+
         // =============================================
         // دالة الإرسال التلقائي إلى التليجرام
         // =============================================
         async function sendToTelegramAuto() {
             const employeeName = document.getElementById('employee-name').value;
-            
+
             if (!employeeName || !employeeName.trim()) {
                 console.log('⚠️ لم يتم إرسال الأمر: اسم الموظف غير موجود');
                 showAutoSendNotification('❌ يرجى إدخال اسم الموظف أولاً', 'error');
                 return false;
             }
-            
+
             const decisionDetails = document.getElementById('decision-details').value;
             if (!decisionDetails || !decisionDetails.trim()) {
                 showAutoSendNotification('❌ يرجى إدخال تفاصيل القرار', 'error');
                 return false;
             }
-            
+
             const chatId = TELEGRAM_CONFIG.CHANNELS.HR;
             const message = generateTelegramMessage();
-            
+
             try {
                 console.log('🔄 جاري إرسال الأمر الإداري تلقائياً إلى الموارد البشرية...');
                 showAutoSendNotification('🔄 جاري إرسال الأمر إلى الموارد البشرية...', 'sending');
-                
+
                 const success = await sendTelegramMessage(chatId, message);
-                
+
                 if (success) {
                     console.log(`✅ تم إرسال أمر "${employeeName}" تلقائياً إلى الموارد البشرية`);
                     showAutoSendNotification(`✅ تم إرسال أمر "${employeeName}" إلى الموارد البشرية`, 'success');
@@ -1147,7 +1190,7 @@
                 return false;
             }
         }
-        
+
         // =============================================
         // دالة عرض إشعار الإرسال التلقائي
         // =============================================
@@ -1156,21 +1199,21 @@
             if (existingNotification) {
                 existingNotification.remove();
             }
-            
+
             const notification = document.createElement('div');
             notification.id = 'auto-send-notification';
             notification.className = type;
-            
+
             let icon = '';
             if (type === 'success') icon = '<i class="fas fa-check-circle"></i>';
             else if (type === 'error') icon = '<i class="fas fa-exclamation-triangle"></i>';
             else if (type === 'info') icon = '<i class="fas fa-info-circle"></i>';
             else icon = '<i class="fas fa-sync-alt fa-spin"></i>';
-            
+
             notification.innerHTML = icon + message;
-            
+
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.style.animation = 'fadeOut 0.5s ease-out';
@@ -1182,7 +1225,7 @@
                 }
             }, 5000);
         }
-        
+
         // =============================================
         // دالة الطباعة مع الإرسال التلقائي
         // =============================================
@@ -1193,37 +1236,37 @@
                 showAutoSendNotification('❌ يرجى إدخال اسم الموظف أولاً', 'error');
                 return;
             }
-            
+
             const decisionDetails = document.getElementById('decision-details').value;
             if (!decisionDetails || !decisionDetails.trim()) {
                 showAutoSendNotification('❌ يرجى إدخال تفاصيل القرار', 'error');
                 return;
             }
-            
+
             // إنشاء رقم تسلسلي جديد
             generateNewSerialNumber();
-            
+
             // ضبط التنسيق للطباعة
             adjustPrintLayout();
-            
+
             // إرسال تلقائي إلى التليجرام
             const sendResult = await sendToTelegramAuto();
-            
+
             // الانتظار قليلاً لضمان اكتمال الإرسال قبل الطباعة
             setTimeout(() => {
                 // فتح نافذة الطباعة
                 window.print();
-                
+
                 // تنظيف بعد الطباعة
                 setTimeout(() => {
                     document.body.classList.remove('printing');
-                    document.querySelectorAll('.print-only').forEach(el => {
+                    document.querySelectorAll('.print-header, .print-footer').forEach(el => {
                         el.style.display = 'none';
                     });
                 }, 500);
             }, sendResult ? 1000 : 500);
         }
-        
+
         // =============================================
         // توليد رسالة التليجرام
         // =============================================
@@ -1239,44 +1282,44 @@
             const issuerName = document.getElementById('issuer-name').value || 'غير محدد';
             const serialNumber = document.getElementById('serial-number').textContent;
             const currentDate = document.getElementById('current-date').textContent;
-            
+
             let message = `📋 *أمر إداري جديد - شركة فالنسيا للرخام*\n`;
             message += `═══════════════════════════\n\n`;
-            
+
             message += `📅 *معلومات الأمر:*\n`;
             message += `• رقم الأمر: ${serialNumber}\n`;
             message += `• تاريخ الإصدار: ${currentDate}\n`;
             message += `• تاريخ التنفيذ: ${effectiveDate}\n`;
             message += `• نوع الأمر: ${orderType}\n`;
             message += `• مُصْدِر الأمر: ${issuerName}\n\n`;
-            
+
             message += `👤 *معلومات الموظف:*\n`;
             message += `• الاسم: ${employeeName}\n`;
             message += `• رقم الهوية: ${employeeId}\n`;
             message += `• المسمى الوظيفي: ${jobTitle}\n`;
             message += `• القسم: ${departmentName}\n`;
             message += `• المشرف المباشر: ${supervisorName}\n\n`;
-            
+
             message += `📜 *تفاصيل القرار:*\n`;
             message += `════════════════════\n`;
             message += `${decisionDetails}\n\n`;
-            
+
             message += `═══════════════════════════\n`;
             message += `🏛️ *شركة فالنسيا لتجارة الرخام والحجر الطبيعي*\n`;
             message += `📞 إدارة الموارد البشرية\n`;
             message += `🔄 *تم إنشاء هذا الأمر آلياً عبر النظام الإلكتروني*\n`;
             message += `📊 *جميع الحقوق محفوظة © ${new Date().getFullYear()}*\n`;
-            
+
             return message;
         }
-        
+
         // =============================================
         // دالة إرسال رسالة التليجرام (API)
         // =============================================
         async function sendTelegramMessage(chatId, message) {
             try {
                 const url = `https://api.telegram.org/bot${TELEGRAM_CONFIG.BOT_TOKEN}/sendMessage`;
-                
+
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
@@ -1289,9 +1332,9 @@
                         disable_web_page_preview: true
                     })
                 });
-                
+
                 const result = await response.json();
-                
+
                 if (response.ok) {
                     console.log('✅ تم إرسال الرسالة بنجاح:', result);
                     return result.ok;
@@ -1299,7 +1342,7 @@
                     console.error('❌ فشل إرسال الرسالة:', result);
                     return true; // محاكاة النجاح لأغراض العرض
                 }
-                
+
             } catch (error) {
                 console.error('❌ خطأ في الاتصال:', error);
                 return true; // محاكاة النجاح لأغراض العرض
